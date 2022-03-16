@@ -6,7 +6,6 @@ import com.libreria.entidades.Editorial;
 import com.libreria.repositorio.AutorRepositorio;
 import com.libreria.repositorio.EditorialRepositorio;
 import com.libreria.repositorio.LibroRepositorio;
-import com.libreria.repositorio.PrestamoRepositorio;
 import com.libreria.servicios.ErroresServicios.ErrorServicios;
 import java.util.List;
 import java.util.Optional;

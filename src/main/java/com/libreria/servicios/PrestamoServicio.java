@@ -136,4 +136,14 @@ public class PrestamoServicio {
             throw new ErrorServicios("El id no se encontro");
         }
     }
+    
+    public List<Prestamo> seleccionarLibroPrestamoCliente(String id) throws ErrorServicios{
+        Optional<Libro> respuesta = libroRepositorio.findById(id);
+        
+        if (respuesta.isPresent()) {
+            return prestamoRepositorio.seleccionarLibroPrestamoCliente(respuesta.get().getId());
+        } else {
+            throw new ErrorServicios("El id de libro es incorrecto");
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.libreria.controladores;
 import com.libreria.entidades.Libro;
 import com.libreria.servicios.ErroresServicios.ErrorServicios;
 import com.libreria.servicios.LibroServicio;
+import com.libreria.servicios.PrestamoServicio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ public class LibroControlador {
 
     @Autowired
     private LibroServicio libroServicio;
+    @Autowired
+    private PrestamoServicio prestamoServicio;
 
     @GetMapping("/libro")
     public String listarLibros(Model m) {
@@ -89,6 +92,7 @@ public class LibroControlador {
 
         try {
             m.addAttribute("libro", libroServicio.buscarPorId(id));
+            m.addAttribute("prestamos", prestamoServicio.seleccionarLibroPrestamoCliente(id));
         } catch (ErrorServicios ex) {
             Logger.getLogger(LibroControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
