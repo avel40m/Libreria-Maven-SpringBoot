@@ -87,7 +87,7 @@ public class PrestamoServicio {
 
         if (respuesta.isPresent()) {
             Libro l = respuesta.get();
-            if (l.getEjemplares() > (l.getEjemplaresReastantes()+ 1)) {
+            if (l.getEjemplares() < l.getEjemplaresPrestados()+ 1) {
                 throw new ErrorServicios("El libro " + l.getTitulo() + " no tiene más ejemplares para prestar");
             }
             if ((l.getEjemplaresReastantes()- 1) < 0) {

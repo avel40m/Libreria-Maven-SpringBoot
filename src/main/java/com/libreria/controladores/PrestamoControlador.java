@@ -18,37 +18,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/")
 public class PrestamoControlador {
+
     @Autowired
     private PrestamoServicio prestamoServicio;
-    
+
     @GetMapping("/prestamo")
-    public String listaPrestamo(Model m){
+    public String listaPrestamo(Model m) {
         m.addAttribute("prestamos", prestamoServicio.listaPrestamos());
         return "/prestamo/index";
     }
-    
+
     @GetMapping("/prestamo/crear")
-    public String crearPrestamo(ModelMap m){
+    public String crearPrestamo(ModelMap m) {
         m.addAttribute("libros", prestamoServicio.listaDeLibro());
         m.addAttribute("clientes", prestamoServicio.listaDeCliente());
         return "/prestamo/crear";
     }
-    
+
     @PostMapping("/prestamo/crear")
-    public String crearPrestamo(@RequestParam String cliente,@RequestParam String libro, @RequestParam String fechaDevolucion,Model m,HttpSession session){
+    public String crearPrestamo(@RequestParam String cliente, @RequestParam String libro, @RequestParam String fechaDevolucion, ModelMap m, HttpSession session) {
         try {
             prestamoServicio.crearPrestamo(cliente, libro, fechaDevolucion);
         } catch (ErrorServicios ex) {
             Logger.getLogger(PrestamoControlador.class.getName()).log(Level.SEVERE, null, ex);
-            m.addAttribute("error", ex.getMessage());
+            m.put("error", ex.getMessage());
             return "/prestamo/crear";
         }
-        session.setAttribute("msg","El libro fue prestado correctamente");
+        session.setAttribute("msg", "El libro fue prestado correctamente");
         return "redirect:/prestamo";
     }
-    
+
     @GetMapping("/prestamo/devolucion/{id}")
-    public String controlDevolucion(@PathVariable String id,HttpSession session){
+    public String controlDevolucion(@PathVariable String id, HttpSession session) {
         try {
             prestamoServicio.devulucionLibro(id);
         } catch (ErrorServicios ex) {
@@ -57,9 +58,9 @@ public class PrestamoControlador {
         session.setAttribute("msg", "El libro fue devuelto");
         return "redirect:/prestamo";
     }
-    
+
     @GetMapping("/prestamo/eliminar/{id}")
-    public String eliminarPrestamo(@PathVariable String id,HttpSession session){
+    public String eliminarPrestamo(@PathVariable String id, HttpSession session) {
         try {
             prestamoServicio.eliminarPrestamo(id);
         } catch (ErrorServicios ex) {
